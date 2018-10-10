@@ -23,7 +23,7 @@ pipeline {
       }
       steps {
         sh 'python --version'
-        sh -c 'pip install --user requests'
+        sh 'pip install --user requests'
         sh 'python -m py_compile sources/add2vals.py sources/calc.py'
       }
     }
