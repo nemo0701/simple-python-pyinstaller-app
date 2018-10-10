@@ -24,7 +24,7 @@ pipeline {
       steps {
         sh 'python --version'
         sh 'pip install --upgrade pip --trusted-host pypi.org --trusted-host files.pythonhosted.org'
-        sh 'pip install --user requests --trusted-host pypi.org --trusted-host files.pythonhosted.org'
+        sh 'pip install  requests --trusted-host pypi.org --trusted-host files.pythonhosted.org'
         sh 'python -m py_compile sources/add2vals.py sources/calc.py'
       }
     }
