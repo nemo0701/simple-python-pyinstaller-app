@@ -1,3 +1,4 @@
+import requests
 '''
 The 'calc' library contains the 'add2' function that takes 2 values and adds
 them together. If either value is a string (or both of them are) 'add2' ensures
@@ -26,3 +27,25 @@ def add2(arg1, arg2):
         arg1conv = str(arg1conv)
         arg2conv = str(arg2conv)
     return arg1conv + arg2conv
+
+
+def queryAXjob(excution_id):
+    print "Check if AX job finished, passed, failed"
+    rest_path='execution/'+excution_id
+    excution_json=sendRequest(rest_path,'get').json()
+    print 'Excution Status: '+ excution_json['execution']['execution_status']
+    print 'Passed tests: ' + excution_json['execution']['passed']
+    print 'Total tests: '+ excution_json['execution']['total']
+    print 'Log URL: '+ excution_json['execution']['results_url']
+
+
+def sendRequest(path,method,payload=None):
+    AUTOMATOS_URL='http://automatosx.usd.lab.emc.com/am/'
+    url=AUTOMATOS_URL+path
+    if method=='post':
+        headers = {'Content-Type': 'text/xml','Accept': 'application/json'}
+        result=requests.post(url,data=payload,headers=headers)
+    if method=='get':
+        headers = {'Accept': 'application/json'}
+        result=requests.get(url,headers=headers)
+    return result
