@@ -43,6 +43,10 @@ class TestCalc(unittest.TestCase):
         """
         result = calc.add2('abc', '5.5')
         self.assertEqual(result, 'abc5.5')
+     
+    def test_could_qurey(self):
+        result=calc.queryAXjob("execution_1539167653_873956_16312_0")
+        self.assertEqual(result, None)
 
 if __name__ == '__main__':
     unittest.main()
