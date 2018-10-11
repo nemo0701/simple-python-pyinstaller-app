@@ -28,6 +28,11 @@ pipeline {
         sh 'python -m py_compile sources/add2vals.py sources/calc.py'
       }
     }
+    stage('StartAX'){
+      steps{
+          sh 'python  sources/startAx.py'
+      }
+    }
     stage('Test') {
       agent {
         docker {
