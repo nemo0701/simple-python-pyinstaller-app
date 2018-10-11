@@ -29,8 +29,17 @@ pipeline {
       }
     }
     stage('StartAX'){
+      agent {
+        docker {
+          image 'python:2-alpine'
+        }
+
+      }
       steps{
-          sh 'python  sources/startAx.py'
+        sh 'python --version'
+        sh 'pip install --upgrade pip --trusted-host pypi.org --trusted-host files.pythonhosted.org'
+        sh 'pip install  requests==2.19.1 --trusted-host pypi.org --trusted-host files.pythonhosted.org'
+        sh 'python  sources/startAx.py'
       }
     }
     stage('Test') {
