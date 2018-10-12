@@ -1,17 +1,14 @@
 pipeline {
   agent none
       parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-
-        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
-        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-
-        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
+        string(name: 'IBID', defaultValue: '0', description: 'Get build from IBID')
+        text(name: 'UTMS_ID', defaultValue: '0', description: 'UTMS ID for report')
+        booleanParam(name: 'STOP_ON_ERROR', defaultValue: true, description: 'Stop test when error')
+        choice(name: 'AX_or_Local Run', choices: ['AutomatosX', 'Local Run'], description: 'Run from AutomatosX or from local')
+        text(name: 'Branch', defaultValue: 'Nighthawk', description: 'Stream of Framework and Test')
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
-
-        file(name: "FILE", description: "Choose a file to upload")
+        file(name: "TestBetXML", description: "Choose a testBed file to upload")
+        file(name: "TestSetXML", description: "Choose a testSet file to upload")
     }
   stages {
     stage('Build') {
@@ -26,6 +23,13 @@ pipeline {
         sh 'pip install --upgrade pip --trusted-host pypi.org --trusted-host files.pythonhosted.org'
         sh 'pip install  requests==2.19.1 --trusted-host pypi.org --trusted-host files.pythonhosted.org'
         sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+        echo "IBID: ${params.IBID}"
+        echo "UTMS_ID: ${params.UTMS_ID}"
+        echo "STOP_ON_ERROR: ${params.STOP_ON_ERROR}"
+        echo "AX_or_Local: ${params.AX_or_Local}"
+        echo "Branch: ${params.Branch}"
+        echo "TestBetXML: ${params.TestBetXML}"
+        echo "TestBetXML: ${params.TestSetXML}"
       }
     }
     stage('StartAX'){
